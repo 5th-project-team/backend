@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.general'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Redis 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // MySQL 의존성
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    // H2 데이터베이스
+    runtimeOnly 'com.h2database:h2'
+
+    // JPA 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // QueryDSL JPA 의존성 (Jakarta)
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    compileOnly 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+    compileOnly 'jakarta.annotation:jakarta.annotation-api'
+    compileOnly 'jakarta.persistence:jakarta.persistence-api'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    // JWT 토큰 관련 설정
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    // 암호화 관련 설정
+    implementation 'org.mindrot:jbcrypt:0.4'
+
+    // Commons Lang3 설정
+    implementation 'org.apache.commons:commons-lang3:3.17.0'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+
+    // Validation 설정 추가
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // Spring Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Lombok 의존성
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    // 테스트 코드 관련 의존성
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
